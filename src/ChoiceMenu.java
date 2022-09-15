@@ -66,6 +66,8 @@ public class ChoiceMenu {
                     }
                 } else {
                     inputRecieved = false;
+                    // This nextLine() call needs to be made to discard the \n from the previous parseInt() call made from the menu.
+                    scanner.nextLine();
                     return new MenuItem(input + (optionsIndex * 3), options[input + (optionsIndex * 3)]);
                 }
             }
