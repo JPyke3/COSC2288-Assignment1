@@ -1,3 +1,5 @@
+package main.java;
+
 public class Vehicle {
     String vehicleID;
     String brand;

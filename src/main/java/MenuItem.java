@@ -1,3 +1,5 @@
+package main.java;
+
 public class MenuItem {
     int index;
     String itemName;

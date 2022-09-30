@@ -1,3 +1,4 @@
+package main.java;
 
 /*
  * Menu
@@ -17,7 +18,7 @@ public class ChoiceMenu {
     Scanner scanner;
 
     // Define initailiser
-    ChoiceMenu(String title, String subtitle, String[] options, Scanner scanner) {
+    public ChoiceMenu(String title, String subtitle, String[] options, Scanner scanner) {
         this.title = title;
         this.subtitle = subtitle;
         this.options = options;
@@ -34,7 +35,7 @@ public class ChoiceMenu {
         // Define function variables
         boolean inputRecieved = true;
         int optionsIndex = 0;
-        int input;
+        Integer input = null;
         String rawInputValue = "";
         // Print the title in a nice format
         System.out.println("-------------------------");
@@ -51,7 +52,21 @@ public class ChoiceMenu {
             printOptions(optionsIndex);
             System.out.println("-------------------------");
             System.out.println("Please input your option");
-            input = Integer.parseInt(scanner.next());
+            boolean valid = false;
+            while (!valid) {
+                try {
+                    input = Integer.parseInt(scanner.next());
+                    if (input < 0 || input > 9) {
+                        throw new OutOfRangeException("Out of Range!");
+                    } else {
+                        valid = true;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input! Please try again.");
+                } catch (OutOfRangeException e) {
+                    System.out.println(e + " Please try again.");
+                }
+            }
             if (input == 9) {
                 inputRecieved = false;
                 return new MenuItem(9, "Exit");
@@ -66,7 +81,8 @@ public class ChoiceMenu {
                     }
                 } else {
                     inputRecieved = false;
-                    // This nextLine() call needs to be made to discard the \n from the previous parseInt() call made from the menu.
+                    // This nextLine() call needs to be made to discard the \n from the previous
+                    // parseInt() call made from the menu.
                     scanner.nextLine();
                     return new MenuItem(input + (optionsIndex * 3), options[input + (optionsIndex * 3)]);
                 }
